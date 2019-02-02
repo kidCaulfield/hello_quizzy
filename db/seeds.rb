@@ -8,22 +8,24 @@
 
 User.destroy_all
 Quiz.destroy_all
+Question.destroy_all
+Answer.destroy_all
 
 
 PASSWORD = "supersecret"
 
 codecore_user = User.create(
-    name: "Educator",
+    username: "Educator",
     email: "educator@gmail.com",
     password: PASSWORD,
     educator: true
 )
 
 10.times do
-    name = Faker::Name.name
+    name = Faker::Name.first_name
     email = "#{name.downcase}@example.com"
     User.create(
-        name: name,
+        username: name,
         email: email,
         password: PASSWORD
     )
@@ -32,22 +34,23 @@ users = User.all
 
 
 5.times do 
+    #CREATING 5 QUIZZES
     created_at = Faker::Date.backward(365 * 5)
     q = Quiz.create(
         name: Faker::Hacker.say_something_smart,
         created_at: created_at,
         updated_at: created_at,
-        # user: users.sample
         user: codecore_user
     )
 
+    #CREATE QUESTIONS (if quizzes are valid)
     if q.valid?
         2.times do
         qtn = Question.new(
             body: Faker::Hacker.say_something_smart,
             created_at: created_at,
             updated_at: created_at,
-            quiz_id: (q.sample).id
+            quiz_id: q.id
         )
         q.questions << qtn
         if qtn.valid?
@@ -56,7 +59,7 @@ users = User.all
                     body: Faker::Hacker.say_something_smart,
                     created_at: created_at,
                     updated_at: created_at,
-                    questions_id: qtn.id,
+                    question_id: qtn.id,
                 )
                 end
             end
@@ -67,7 +70,8 @@ end
 
 
 users = User.all
-questions = Questions.all
+quizzes = Quiz.all
+questions = Question.all
 answers = Answer.all
 
 puts "Created #{users.count} users"
