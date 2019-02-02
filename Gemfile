@@ -46,6 +46,7 @@ gem 'active_model_serializers'
 gem 'rack-cors'
 gem 'webpacker'
 gem 'react-rails'
+gem 'rb-readline'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

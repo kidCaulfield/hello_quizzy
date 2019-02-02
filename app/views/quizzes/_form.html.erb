@@ -1,27 +1,18 @@
-<%= form_with(model: quiz, local: true) do |form| %>
-  <% if quiz.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+<div class="container">
+  <%= form_with(model: quiz, local: true) do |form| %>
+    <% if @post.errors.present? %>
+        <p class="form-errors">
+        <%= @post.errors.full_messages.join(", ") %>
+        </p>
+    <% end %>
 
-      <ul>
-      <% quiz.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="field form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit, class: "btn btn-secondary" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
