@@ -1,17 +1,14 @@
 Rails.application.routes.draw do
   
   root "welcome#index"
-  
-  resources :quizzes do
-    resources :questions do
-      resources :answers 
 
-    end
-  end
-      
-      
-  resources :users do
-    resources :scores
-  end
+  resources :quizzes 
+  resources :questions 
+  resources :answers 
+  resources :scores
+  resources :users, only: [:new, :create]
+  resource :session
+  
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
