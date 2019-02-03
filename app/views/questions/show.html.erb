@@ -7,8 +7,43 @@
 
 <p>
   <strong>Quiz:</strong>
-  <%= @question.quiz %>
+  <%= @question.quiz.name %>
+
+  <div>
+  <%# if current_user.educator == false %>
+    <% @answers.each do |answer| %>
+        <div>
+          <p><%= answer.body %></p>
+
+          <small>
+                    <% if answer.correct == true %>
+                      <button>check</button>
+                    <% else %>
+                      <button>check</button>
+                    <% end %>
+                    
+          </small> 
+              
+        </div>
+      <%# else %>
+      
+    <%#   <div>
+          <p><%= answer.body %></p>
+
+      <%#     <small>
+                    <% if answer.correct == true %>
+      <%#                 <button>edit</button>
+                    <% else %>
+      <%#                 <button>edit</button>
+                    <% end %>
+                    
+      <%#     </small> 
+              
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
 </p>
 
 <%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
