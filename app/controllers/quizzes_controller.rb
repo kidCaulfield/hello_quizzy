@@ -10,7 +10,7 @@ class QuizzesController < ApplicationController
 
   def show
     # Check within the view to determine who is the 
-    if true#user_signed_in?
+    if user_signed_in?
         #if you're teacher
         if current_user.educator == true
           # @quizzes = Quiz.all.where("user_id = 79")
