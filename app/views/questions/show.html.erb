@@ -1,7 +1,7 @@
-<h4>Quiz: <%= @question.quiz.name %></h4>
+<h4>Quiz Name: <%= @question.quiz.name %></h4>
 
-<h4>Question: <%= @question.body %> </h4>
-<%= link_to 'Edit', edit_question_path(@question.id) %>
+<h4>Question Title: <%= @question.body %> </h4>
+<%= link_to 'Edit Question Details', edit_question_path(@question.id), class: "btn btn-small btn-warning" %>
 
 <div>
   <% @answers.each do |answer| %>

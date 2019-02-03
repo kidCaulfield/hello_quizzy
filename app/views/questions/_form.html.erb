@@ -1,7 +1,7 @@
 <div class="card new-question">
 
 <div class="container">
-<%= form_with(url: quiz_url(@quiz), local: true) do |form| %>
+<%= form_with(url: question_url(@question.id), local: true) do |form| %>
     <% if question.errors.present? %>
         <p class="form-errors">
         <%= question.errors.full_messages.join(", ") %>

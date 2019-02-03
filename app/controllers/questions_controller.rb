@@ -1,16 +1,13 @@
 class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  # before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /questions
-  # GET /questions.json
   def index
     @questions = Question.all.order(created_at: :desc)
-
   end
 
   # GET /questions/1
-  # GET /questions/1.json
   def show
     @answers = @question.answers.order(created_at: :desc)
   end
@@ -26,7 +23,6 @@ class QuestionsController < ApplicationController
   end
 
   # POST /questions
-  # POST /questions.json
   def create
     @question = Question.new(question_params)
     @question.quiz = Quiz.find params[:quiz_id]
@@ -41,7 +37,6 @@ class QuestionsController < ApplicationController
   end
 
   # PATCH/PUT /questions/1
-  # PATCH/PUT /questions/1.json
   def update
     if @question.update question_params
       redirect_to question_path(@question.id)
@@ -51,7 +46,6 @@ class QuestionsController < ApplicationController
   end
 
   # DELETE /questions/1
-  # DELETE /questions/1.json
   def destroy
     @question.destroy
     respond_to do |format|
@@ -71,7 +65,7 @@ class QuestionsController < ApplicationController
     end
 
     def authorize_user!
-      unless can?(:crud, @quesiton)
+      unless can?(:crud, @question)
           flash[:danger] = "Access Denied"
           redirect_to question_path(@question.id)
       end

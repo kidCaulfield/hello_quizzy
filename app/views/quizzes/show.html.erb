@@ -14,3 +14,12 @@
     <%= link_to 'Add Question to Quiz', new_quiz_question_path(@quiz.id) %>
     </div>
    </div>
+
+<div class="mt-3">
+<h3>Quiz Questions:</h3>
+  <ol>
+    <% @questions.each do |question|%>
+    <li><%= question.body %></li>
+    <% end %>
+  </ol>
+  </div>
