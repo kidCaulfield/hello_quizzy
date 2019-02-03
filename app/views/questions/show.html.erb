@@ -1,49 +1,19 @@
-<p id="notice"><%= notice %></p>
+<h4>Quiz: <%= @question.quiz.name %></h4>
 
-<p>
-  <strong>Body:</strong>
-  <%= @question.body %>
-</p>
+<h4>Question: <%= @question.body %> </h4>
+<%= link_to 'Edit', edit_question_path(@question.id) %>
 
-<p>
-  <strong>Quiz:</strong>
-  <%= @question.quiz.name %>
+<div>
+  <% @answers.each do |answer| %>
+      <div>
+        <p><%= answer.body %></p>
 
-  <div>
-  <%# if current_user.educator == false %>
-    <% @answers.each do |answer| %>
-        <div>
-          <p><%= answer.body %></p>
+        <small>
+          <%= link_to 'Edit', edit_answer_path(answer.id) %>
+        </small> 
 
-          <small>
-                    <% if answer.correct == true %>
-                      <button>check</button>
-                    <% else %>
-                      <button>check</button>
-                    <% end %>
-                    
-          </small> 
-              
-        </div>
-      <%# else %>
-      
-    <%#   <div>
-          <p><%= answer.body %></p>
+      </div>
+  <% end %>
+</div>
 
-      <%#     <small>
-                    <% if answer.correct == true %>
-      <%#                 <button>edit</button>
-                    <% else %>
-      <%#                 <button>edit</button>
-                    <% end %>
-                    
-      <%#     </small> 
-              
-        </div>
-      <% end %>
-    <% end %>
-  </div>
 
-</p>
-
-<%= link_to 'Edit', edit_question_path(@question) %> |
