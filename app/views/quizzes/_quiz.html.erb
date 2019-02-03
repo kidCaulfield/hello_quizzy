@@ -1,5 +1,5 @@
 
-<%= link_to 'Create New Quiz', new_quiz_path, class: "btn btn-success"%>
+<%= link_to 'Create New Quiz', new_quiz_path, class: "btn btn-success mb-2"%>
 
 <% obj.each do |quiz| %>
 <div class="card">
@@ -17,15 +17,9 @@
           last updated: <%= time_ago_in_words(quiz.updated_at) %> ago </small>
       </div>  
     </div>
-    <% if current_user === quiz.user %>
-    <div class="post-actions">
-        <%= link_to "Edit this Quiz", edit_quiz_path(quiz), class: "btn btn-sm btn-warning" %> 
-        <%= link_to "Delete this Quiz", quiz_path(quiz), method: :delete, 
-        data: { confirm: "Are you sure you want to Delete the Quiz?"}, 
-        class: "btn btn-sm btn-danger" %>
-    </div>
-    <% end %>
-        <%= link_to 'Take This Quiz', root_path, class: "btn btn-sm btn-outline-success" %>
+
+
+
     </div>
     </div>
     </div>
