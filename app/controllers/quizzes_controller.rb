@@ -2,11 +2,11 @@ class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
 
   def index
-    @quizzes = Quiz.all.order(created_at: :desc)
-
+    @quizzes = Quiz.paginate(:page => params[:page], :per_page => 5)
   end
 
   def show
+    # Check within the view to determine who is the 
   end
 
   def new
@@ -18,10 +18,12 @@ class QuizzesController < ApplicationController
 
   def create
     @quiz = Quiz.new quiz_params
-        @quiz.user = current_user
-        if can? (:create)
-            @quiz.save
-            flash[:primary] = "Thanks for your new quiz!"
+        @quiz.user = User.first#current_user
+        # if can? (:create)
+
+
+        if @quiz.save quiz_params
+            flash[:primary] = "Hello, Quizzy!"
             redirect_to quiz_path(@quiz.id)
         else
             render :new 
@@ -40,13 +42,21 @@ class QuizzesController < ApplicationController
   end
 
   def destroy
-    @quiz = Quiz.find params[:id]
-    @quiz.destroy
-    flash[:primary] = "We're sorry to see that you deleted your quiz."
+    quiz = Quiz.find params[:id]
+    quiz.destroy
+    flash[:primary] = "Goodbye, Quizzy!"
     redirect_to root_path
   end
 
   private
+
+  def authorize_user!
+    unless can?(:crud, @quiz)
+      flash[:danger] = "Access Denied"
+      redirect_to quiz_path(@quiz)
+    end
+  end
+  
     def set_quiz
       @quiz = Quiz.find(params[:id])
     end
