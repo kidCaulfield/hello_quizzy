@@ -2,15 +2,7 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
 
-  # GET /questions
-  # GET /questions.json
-  def index
-    @questions = Question.all
-
-  end
-
   # GET /questions/1
-  # GET /questions/1.json
   def show
     @answers = @question.answers.order(created_at: :desc)
   end
@@ -26,23 +18,20 @@ class QuestionsController < ApplicationController
   end
 
   # POST /questions
-  # POST /questions.json
   def create
     @question = Question.new(question_params)
-
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    @question.quiz = Quiz.find params[:quiz_id]
+    
+    if @question.save question_params
+      flash[:success] = "Question created"
+      redirect_to quiz_path(@question.quiz)
+    else
+      flash[:danger] = "There appear to be some errors."
+      render 'questions/new'
     end
   end
 
   # PATCH/PUT /questions/1
-  # PATCH/PUT /questions/1.json
   def update
     if @question.update question_params
       redirect_to question_path(@question.id)
@@ -52,13 +41,10 @@ class QuestionsController < ApplicationController
   end
 
   # DELETE /questions/1
-  # DELETE /questions/1.json
   def destroy
     @question.destroy
-    respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:danger] = "Question has been deleted"
+    redirect_to quiz_path(@question.quiz)
   end
 
   private
@@ -72,7 +58,7 @@ class QuestionsController < ApplicationController
     end
 
     def authorize_user!
-      unless can?(:crud, @quesiton)
+      unless can?(:crud, @question)
           flash[:danger] = "Access Denied"
           redirect_to question_path(@question.id)
       end

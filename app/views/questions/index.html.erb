@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Questions</h1>
-
+<%= link_to 'Add A Question', new_quiz_question_path, class: "btn btn-success" %>
 <table>
   <thead>
     <tr>
       <th>Body</th>
-      <th>Quiz</th>
+      <th>Quiz Name</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
     <% @questions.each do |question| %>
       <tr>
         <td><%= question.body %></td>
-        <td><%= question.quiz %></td>
+        <td><%= question.quiz.name %></td>
         <td><%= link_to 'Show', question %></td>
         <td><%= link_to 'Edit', edit_question_path(question) %></td>
         <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Question', new_question_path %>
+
