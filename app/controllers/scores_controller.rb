@@ -31,11 +31,22 @@ class ScoresController < ApplicationController
   # POST /scores
   # POST /scores.json
   def create
-    @score = Score.find params[:id]
+    @score = Score.new
+    @score.results = params
+    @score.user = current_user
+    @quiz = Quiz.find params[:quiz_id]
+    @score.quiz_id = params[:quiz_id]
+    if @score.save
+
     #this saves the student's answers
     # render json: params
     #then...redirect to score#show
-    redirect_to quiz_score_path(@score.quiz_id, @score.id)
+      redirect_to quiz_score_path(@quiz, @score)
+    else
+      puts @score.errors.full_messages
+      redirect_to root_path
+    end
+
     
 
     
@@ -47,6 +58,7 @@ class ScoresController < ApplicationController
   def show
     ######################################
     @score = Score.find(params[:id])
+
     @score.user = current_user
     @quiz = Quiz.find(@score.quiz_id)
 #####################################################
@@ -74,6 +86,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:quiz_id)
+      params.require(:score).permit!
     end
 end

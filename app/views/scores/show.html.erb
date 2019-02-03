@@ -2,13 +2,25 @@
 
 <%@quiz.questions.each do |quiz_question|%>
   <div>
+    <b>Question</b>
     <p><%=quiz_question.body%></p>
-    <%#Below finds you ALL the answers of the question%>
-    <%=quiz_question.answers%>
     
-    <%# Below finds you the ANSWER that the student chose%>
-    <%=quiz_question.answers[@score.results[question.id]]%>
+    <% selected_answer = quiz_question.answers.select{ |a| a.id == @score.results[quiz_question.id.to_s].to_i}[0]%>
+    <%puts selected_answer.body%>
 
+    <% if selected_answer.correct == true  %>
+        <b>You chose the correct answer: </b>
+        <p><%=selected_answer.body%></p>
+    <% else %>
+        <b>You chose: </b>
+        <p><%=selected_answer.body%></p>
+        <b>However, the correct answer is:</b>
+        <%quiz_question.answers.each do |answer|%>
+          <%if answer.correct == true %>
+            <%=answer.body%><br>
+          <% end %>
+        <% end %>
+    <% end %>
   </div>
 <% end %>
 

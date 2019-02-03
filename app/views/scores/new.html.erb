@@ -1,4 +1,4 @@
-<%= form_with(scope: @score, url: quiz_scores_path, method: :post, local: true) do |form| %>
+<%= form_with(model: @score, url: quiz_scores_path, method: :post, local: true) do |form| %>
   <% if @score.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(score.errors.count, "error") %> prohibited this score from being saved:</h2>
