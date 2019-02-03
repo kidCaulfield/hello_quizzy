@@ -33,11 +33,11 @@ class QuizzesController < ApplicationController
   def create
     @quiz = Quiz.create quiz_params
         @quiz.user = current_user
-        if can? (:create)
-            @quiz.save
+        # if can? (:create)
+            if @quiz.save
             # flash[:primary] = "Thanks for your new quiz!"
             # redirect_to quiz_path(@quiz.id)
-            redirect_to quizzes_path
+            redirect_to root_path
         else
             flash[:danger] = "you are not authorized because you're a student"
             render root_path

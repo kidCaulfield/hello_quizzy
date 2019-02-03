@@ -53,15 +53,23 @@ users = User.all
             quiz_id: q.id
         )
         q.questions << qtn
-        if qtn.valid?
-            4.times do
+            if qtn.valid?
+                3.times do
                 a = Answer.create(
                     body: Faker::Hacker.say_something_smart,
                     created_at: created_at,
                     updated_at: created_at,
                     question_id: qtn.id,
+                    correct: false
                 )
-                end
+                end 
+                b = Answer.create(
+                    body: Faker::Hacker.say_something_smart,
+                    created_at: created_at,
+                    updated_at: created_at,
+                    question_id: qtn.id,
+                    correct: true
+                )
             end
         end
     end

@@ -1,8 +1,8 @@
 <div class="container">
-  <%= form_with(model: quiz, local: true) do |form| %>
-    <% if @post.errors.present? %>
+  <%= form_with(model: @quiz, local: true) do |form| %>
+    <% if @quiz.errors.present? %>
         <p class="form-errors">
-        <%= @post.errors.full_messages.join(", ") %>
+        <%= @quiz.errors.full_messages.join(", ") %>
         </p>
     <% end %>
 
@@ -12,7 +12,7 @@
     </div>
 
     <div class="actions">
-      <%= form.submit, class: "btn btn-secondary" %>
+      <%= form.submit %>
     </div>
   <% end %>
 </div>
