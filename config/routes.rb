@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     resources :scores
   end
 
-  resource :session
+  resource :session, only: [:new, :create, :destroy]
   
 end
