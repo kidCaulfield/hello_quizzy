@@ -1,8 +1,8 @@
 <div class="container">
-  <%= form_with(model: @quiz, local: true) do |form| %>
-    <% if @quiz.errors.present? %>
+  <%= form_with(model: quiz, local: true) do |form| %>
+    <% if quiz.errors.present? %>
         <p class="form-errors">
-        <%= @quiz.errors.full_messages.join(", ") %>
+        <%= quiz.errors.full_messages.join(", ") %>
         </p>
     <% end %>
 
@@ -11,8 +11,19 @@
       <%= form.text_field :name, class: "form-control" %>
     </div>
 
+    <div>
+     <%= form.label :description %> <br>
+     <%= form.text_area :description, cols: 50, rows: 5 %>
+     </div>
+
+    < div>
+     <%= form.label :published %> <br>
+     <%= form.text_field :published, cols: 50, rows: 5 %>
+     </div >
+
     <div class="actions">
-      <%= form.submit %>
+      <%= form.submit class: "btn btn-secondary" %>
+      <%= link_to 'Back', 'javascript:history.back()', class: "btn btn-danger", data:{confirm: "Changes will not be saved. Are you sure you want to go back?"} %>
     </div>
   <% end %>
 </div>

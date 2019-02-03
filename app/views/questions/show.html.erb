@@ -1,14 +1,19 @@
-<p id="notice"><%= notice %></p>
+<h4>Quiz: <%= @question.quiz.name %></h4>
 
-<p>
-  <strong>Body:</strong>
-  <%= @question.body %>
-</p>
+<h4>Question: <%= @question.body %> </h4>
+<%= link_to 'Edit', edit_question_path(@question.id) %>
 
-<p>
-  <strong>Quiz:</strong>
-  <%= @question.quiz %>
-</p>
+<div>
+  <% @answers.each do |answer| %>
+      <div>
+        <p><%= answer.body %></p>
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
+        <small>
+          <%= link_to 'Edit', edit_answer_path(answer.id) %>
+        </small> 
+
+      </div>
+  <% end %>
+</div>
+
+

@@ -1,14 +1,16 @@
-<p id="notice"><%= notice %></p>
+<h2>Title: <%= @quiz.name %></h2>
+<div class="well col-sm-8 col-sm-offset-2">
 
-<p>
-  <strong>Name:</strong>
-  <%= @quiz.name %>
-</p>
+  <h4 class="description"><strong>Description:</strong></h4>
+  <hr>
+  <%#= simple_format(@quiz.description) %>
+  <div class="post-actions">
+  <%# if logged_in? && current_user == @quiz.user %>
+   <%= link_to "Edit this Quiz", edit_quiz_path(@quiz), class: "btn btn-sm btn-primary" %>
 
-<p>
-  <strong>User:</strong>
-  <%= @quiz.user %>
-</p>
-
-<%= link_to 'Edit', edit_quiz_path(@quiz) %> |
-<%= link_to 'Back', quizzes_path %>
+   <%= link_to "Delete this Quiz", quiz_path(@quiz), method: :delete, data: { confirm: "Are you sure you want to Delete the Post?"}, class: "btn btn-sm btn-danger" %>
+   <%# end %>
+    <%= link_to "View all Quizzes", quizzes_path, class: "btn btn-sm btn-success" %>
+    <%= link_to 'Add Question to Quiz', new_quiz_question_path(@quiz.id) %>
+    </div>
+   </div>

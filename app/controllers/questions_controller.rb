@@ -1,19 +1,23 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /questions
   # GET /questions.json
   def index
     @questions = Question.all
+
   end
 
   # GET /questions/1
   # GET /questions/1.json
   def show
+    @answers = @question.answers.order(created_at: :desc)
   end
 
   # GET /questions/new
   def new
+    @quiz = Quiz.find params[:quiz_id]
     @question = Question.new
   end
 
@@ -40,14 +44,10 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
-    respond_to do |format|
-      if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
-      else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.update question_params
+      redirect_to question_path(@question.id)
+    else
+      render :edit
     end
   end
 
@@ -62,13 +62,19 @@ class QuestionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question
-      @question = Question.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       params.require(:question).permit(:body, :quiz_id)
+    end
+
+    def find_question
+      @question = Question.find params[:id]
+    end
+
+    def authorize_user!
+      unless can?(:crud, @quesiton)
+          flash[:danger] = "Access Denied"
+          redirect_to question_path(@question.id)
+      end
     end
 end

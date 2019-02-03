@@ -1,7 +1,15 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
+  # before_action :authorize_user!, only: [:new, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  
 
   def index
+    @quizzes = Quiz.all.order(created_at: :desc)
+  end
+
+  def show
+    # Check within the view to determine who is the 
     if user_signed_in?
         #if you're teacher
         if current_user.educator == true
@@ -16,10 +24,6 @@ class QuizzesController < ApplicationController
           flash[:danger] = "You are not signed in"
           redirect_to new_session_path
     end
-  end
-
-  def show
-    @quiz = Quiz.find(params[:id])
   end
 
   def new
@@ -57,11 +61,11 @@ class QuizzesController < ApplicationController
   def destroy
     @quiz = Quiz.find params[:id]
     @quiz.destroy
-    flash[:primary] = "We're sorry to see that you deleted your quiz."
+    flash[:primary] = "Goodbye, Quizzy!"
     redirect_to quizzes_path
   end
 
-  private
+  private 
     def set_quiz
       @quiz = Quiz.find(params[:id])
     end
@@ -69,4 +73,11 @@ class QuizzesController < ApplicationController
     def quiz_params
       params.require(:quiz).permit(:name, :description, :published)
     end
-end
+
+    def authorize_user!
+      unless can?(:crud, @quizzes)
+          flash[:danger] = "Access Denied"
+          # redirect_to quizzes_path
+      end
+    end
+  end
