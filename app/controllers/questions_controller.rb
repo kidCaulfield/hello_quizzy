@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /questions
   # GET /questions.json
@@ -67,5 +68,12 @@ class QuestionsController < ApplicationController
 
     def find_question
       @question = Question.find params[:id]
+    end
+
+    def authorize_user!
+      unless can?(:crud, @quesiton)
+          flash[:danger] = "Access Denied"
+          redirect_to question_path(@question.id)
+      end
     end
 end
