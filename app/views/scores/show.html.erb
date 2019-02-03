@@ -1,14 +1,16 @@
-<p id="notice"><%= notice %></p>
+<h1>Your resuls for Quiz <%=@score.quiz.name%></h1>
 
-<p>
-  <strong>Quiz:</strong>
-  <%= @score.quiz %>
-</p>
+<%@quiz.questions.each do |quiz_question|%>
+  <div>
+    <p><%=quiz_question.body%></p>
+    <%#Below finds you ALL the answers of the question%>
+    <%=quiz_question.answers%>
+    
+    <%# Below finds you the ANSWER that the student chose%>
+    <%=quiz_question.answers[@score.results[question.id]]%>
 
-<p>
-  <strong>User:</strong>
-  <%= @score.user %>
-</p>
+  </div>
+<% end %>
 
-<%= link_to 'Edit', edit_score_path(@score) %> |
-<%= link_to 'Back', scores_path %>
+
+

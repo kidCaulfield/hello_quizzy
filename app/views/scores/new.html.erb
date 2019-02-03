@@ -18,21 +18,19 @@
   </div>
 
   <% @questions.each do |question|%>
-
     <div class="field">
      <b>Question<%=question.id%>:<%=question.body%></b><br>
        <% question.answers.each do |answer|%>
           <p><span>
           <%= radio_button_tag(question.id, answer.id, false)%>
           <label for=<%=answer.id%>><%=answer.body%></label>
-          
           </span></p>
-      <% end %>
+        <% end %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit%>
   </div>
 </div>
 

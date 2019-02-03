@@ -17,7 +17,7 @@ class ScoresController < ApplicationController
     @score = Score.new
     @quiz = Quiz.find params[:quiz_id]
     @questions = @quiz.questions
-    @score.points = 0
+    # @score.points = 0
     
     
 
@@ -31,10 +31,40 @@ class ScoresController < ApplicationController
   # POST /scores
   # POST /scores.json
   def create
-    @score = Score.create
+    @score = Score.find params[:id]
+    #this saves the student's answers
+    # render json: params
+    #then...redirect to score#show
+    redirect_to quiz_score_path(@score.quiz_id, @score.id)
+    
 
-    puts @score
+    
+    # @score = Score.create
+    # puts @score.quiz_id
   end
+
+
+  def show
+    ######################################
+    @score = Score.find(params[:id])
+    @score.user = current_user
+    @quiz = Quiz.find(@score.quiz_id)
+#####################################################
+    @questions = Quiz.find(@score.quiz_id).questions
+    # @answers = @questions.answers
+    
+    
+    #Using the student's answer's id to query the Quiz->QUestion->Answer
+    
+    
+    #Find the students' answers for a particular quiz
+    #Find the correct answers for that particular quiz
+
+    #Compare the above
+    
+
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

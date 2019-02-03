@@ -45,7 +45,7 @@ users = User.all
 
     #CREATE QUESTIONS (if quizzes are valid)
     if q.valid?
-        2.times do
+        3.times do
         qtn = Question.new(
             body: Faker::Hacker.say_something_smart,
             created_at: created_at,
