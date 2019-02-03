@@ -10,6 +10,7 @@ class QuizzesController < ApplicationController
 
   def show
     # Check within the view to determine who is the 
+    @questions = @quiz.questions
     if user_signed_in?
         #if you're teacher
         if current_user.educator == true
@@ -20,7 +21,7 @@ class QuizzesController < ApplicationController
           @quizzes = Quiz.all.where("published = true")
         end
     else 
-          # you're not signed IN
+          # you're NOT signed in
           flash[:danger] = "You are not signed in"
           redirect_to new_session_path
     end
