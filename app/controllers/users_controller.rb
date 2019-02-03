@@ -29,9 +29,11 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to Hello Quizzy #{@user.username}"
       redirect_to user_path(@user)
     else
-      render 'new'
+      render :new
+
+    def new
+        @user = User.new
     end
-  end
 
   # PATCH/PUT /users/:id
   def update
@@ -51,7 +53,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :username, :educator)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation)
     end
 
     def set_user

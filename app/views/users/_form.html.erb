@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%#= render 'shared/errors', obj: @user %>
 <div class="row">
         <div class="col-sm-12">
@@ -38,3 +39,26 @@
     </div>
     </div>
 </div>
+=======
+<div class="container-fluid">
+<%= form_with(model: @user, local: true) do |form|%>
+    <div class="form-group mt-3">
+    <%= form.label :username %>
+    <%= form.text_field :username, class: "form-control" %>
+    </div>
+    <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
+    </div>
+    <div class="form-group">
+    <%= form.label :password %>
+    <%= form.password_field :password, class: "form-control" %>
+    </div>
+    <div class="form-group">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, class: "form-control" %>
+    </div>
+    <%= form.submit "Sign Up", class: "btn btn-outline-primary"%>
+<% end %>
+</div>
+>>>>>>> integration
