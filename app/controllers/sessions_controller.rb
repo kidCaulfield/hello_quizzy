@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       if user&.authenticate(params[:password])
         session[:user_id] = user.id
         flash[:primary] = "Logged in"
-        redirect_to root_path
+        redirect_to quizzes_path
       else
         flash[:primary] = "Email or password is incorrect"
         render :new

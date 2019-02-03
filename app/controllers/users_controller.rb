@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    @uses_quizzes = @user.quizzes.paginate(page: params[:page], per_page: 5)
+    @user_quizzes = @user.quizzes.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /users/new
@@ -26,10 +26,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
       if @user.save
       session[:user_id] = @user.id
-      flash[:success] = "Welcome to Hello Quizzy #{@user.username}"
-      redirect_to user_path(@user)
+      flash[:success] = "Welcome to Hello Quizzy, #{@user.username}"
+      redirect_to quizzes_path
     else
       render :new
+    end
+  end
 
     def new
         @user = User.new
@@ -64,6 +66,6 @@ class UsersController < ApplicationController
       if current_user != @user
         flash[:danger] = "You can only Edit your own Account"
         redirect_to root_path
+      end
     end
-  end
 end
