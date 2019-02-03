@@ -36,7 +36,22 @@ class ScoresController < ApplicationController
     @score.user = current_user
     @quiz = Quiz.find params[:quiz_id]
     @score.quiz_id = params[:quiz_id]
+
+    answers = []
+    @quiz.questions.each do |question|
+      answers << Answer.find(@score.results["#{question.id}"].to_i)
+    end
+
+    total_correct = answers.select{|a| a.correct == true}.size
+    @score.total = (total_correct.to_f / @quiz.questions.size.to_f)*100
+
+    
+
+
+
     if @score.save
+
+
 
     #this saves the student's answers
     # render json: params
