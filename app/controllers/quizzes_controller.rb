@@ -5,17 +5,17 @@ class QuizzesController < ApplicationController
     if user_signed_in?
         #if you're teacher
         if current_user.educator == true
-          @quizzes = Quiz.where("user_id" = current_user.id)
+          # @quizzes = Quiz.all.where("user_id = 79")
+          @quizzes = Quiz.all.where(`user_id = #{current_user}`)
         else
           #if you're studnet
-          @quizzes = Quiz.where("published" = true)
+          @quizzes = Quiz.all.where("published = true")
         end
-      else 
+    else 
           # you're not signed IN
           flash[:danger] = "You are not signed in"
           redirect_to new_session_path
     end
-
   end
 
   def show
@@ -42,7 +42,6 @@ class QuizzesController < ApplicationController
             flash[:danger] = "you are not authorized because you're a student"
             render root_path
         end
-    
   end
 
   def update
