@@ -31,7 +31,6 @@ class QuizzesController < ApplicationController
   end
 
   def edit
-    # @quiz = Quiz.find params[:id]
   end
 
   def create
@@ -39,20 +38,20 @@ class QuizzesController < ApplicationController
         @quiz.user = current_user
         # if can? (:create)
             if @quiz.save
-            # flash[:primary] = "Thanks for your new quiz!"
-            # redirect_to quiz_path(@quiz.id)
-            redirect_to root_path
+            flash[:primary] = "You've created a new quiz! Hello, Quizzy!"
+            redirect_to quiz_path(@quiz.id)
+            # redirect_to quizzes_path
         else
-            flash[:danger] = "you are not authorized because you're a student"
-            render root_path
+            flash[:danger] = "Something went wrong. Please review the page below."
+            render 'quizzes/new'
         end
   end
 
   def update
-    # @quiz = Quiz.find params[:id]
+    @quiz = Quiz.find params[:id]
         if @quiz.update quiz_params
             flash[:primary] = "Thanks for updating your quiz!"
-            redirect_to quizzes_path
+            redirect_to quiz_path(@quiz)
         else 
             render :edit
         end

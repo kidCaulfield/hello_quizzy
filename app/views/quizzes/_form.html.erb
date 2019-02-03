@@ -1,9 +1,9 @@
 <div class="container">
   <%= form_with(model: quiz, local: true) do |form| %>
     <% if quiz.errors.present? %>
-        <p class="form-errors">
-        <%= quiz.errors.full_messages.join(", ") %>
-        </p>
+        <strong class="form-errors">
+        *** <%= quiz.errors.full_messages.join(", ") %> ***
+        </strong>
     <% end %>
 
     <div class="field form-group">
