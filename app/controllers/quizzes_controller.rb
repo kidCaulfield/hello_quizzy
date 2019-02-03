@@ -1,10 +1,11 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, only: [:new, :edit, :update, :destroy]
+  # before_action :authorize_user!, only: [:new, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
   
 
   def index
-    @quizzes = Quiz.paginate(:page => params[:page], :per_page => 5)
+    @quizzes = Quiz.all.order(created_at: :desc)
   end
 
   def show
@@ -36,10 +37,11 @@ class QuizzesController < ApplicationController
   def create
     @quiz = Quiz.create quiz_params
         @quiz.user = current_user
-        if can? (:create)
-            @quiz.save
-            flash[:primary] = "Hello, Quizzy!"
-            redirect_to quizzes_path
+        # if can? (:create)
+            if @quiz.save
+            # flash[:primary] = "Thanks for your new quiz!"
+            # redirect_to quiz_path(@quiz.id)
+            redirect_to root_path
         else
             flash[:danger] = "you are not authorized because you're a student"
             render root_path
@@ -70,13 +72,12 @@ class QuizzesController < ApplicationController
 
     def quiz_params
       params.require(:quiz).permit(:name, :description, :published)
-      redirect_to quizzes_path
     end
 
     def authorize_user!
       unless can?(:crud, @quizzes)
           flash[:danger] = "Access Denied"
-          redirect_to quizzes_path
+          # redirect_to quizzes_path
       end
     end
   end

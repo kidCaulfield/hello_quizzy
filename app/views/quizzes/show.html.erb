@@ -4,12 +4,13 @@
   <h4 class="description"><strong>Description:</strong></h4>
   <hr>
   <%#= simple_format(@quiz.description) %>
- <div class="post-actions">
+  <div class="post-actions">
   <%# if logged_in? && current_user == @quiz.user %>
    <%= link_to "Edit this Quiz", edit_quiz_path(@quiz), class: "btn btn-sm btn-primary" %>
 
    <%= link_to "Delete this Quiz", quiz_path(@quiz), method: :delete, data: { confirm: "Are you sure you want to Delete the Post?"}, class: "btn btn-sm btn-danger" %>
    <%# end %>
     <%= link_to "View all Quizzes", quizzes_path, class: "btn btn-sm btn-success" %>
+    <%= link_to 'Add Question to Quiz', new_quiz_question_path(@quiz.id) %>
     </div>
    </div>
