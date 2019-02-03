@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-full" style="background-color: #ff3399">
+
+    <%= link_to "Hello Quizzy", root_path, class: "navbar-brand", id:"logo" %>
+    <%= link_to "Quizzes", quizzes_path, class: "navbar-brand", id:"post-list" %></li>
+    <%= link_to "Users", users_path, class: "navbar-brand" %></a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <% if user_signed_in? %>
+      <ul class="navbar-nav ml-auto"> 
+       <li class="nav-item active">
+            <%= link_to "New-Quiz", new_quiz_path, class: "nav-link", id:"new-post" %>
+        </li>
+
+        <% end %>
+      
+        <% if user_signed_in? %>
+        <li class="nav-item active">
+          <%= link_to "Log Out", session_path, class: "nav-link", method: :delete %></li>
+           </li>
+          <li class="nav-item dropdown">
+          
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+          </a>
+         <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#"><%#= link_to "Edit your profile", edit_user_path %> </a>
+            <a class="dropdown-item" href="#"><%#= link_to "View your profile", user_path %> </a>
+          </div>
+        </li>
+          <% else %>
+            <a class="navbar-nav ml-auto">
+            <a class="nav-item active">
+             <%= link_to "Log In", new_session_path, class: "navbar-brand" %>
+             <%= link_to "Sign Up", new_user_path, class: "navbar-brand" %>
+             
+             </li>
+             
+            <% end %>
+        
+       
+    </div>
+</nav>	
+

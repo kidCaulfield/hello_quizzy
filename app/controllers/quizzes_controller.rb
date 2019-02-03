@@ -2,6 +2,11 @@ class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
 
   def index
+    @quizzes = Quiz.paginate(:page => params[:page], :per_page => 5)
+  end
+
+  def show
+    # Check within the view to determine who is the 
     if user_signed_in?
         #if you're teacher
         if current_user.educator == true
@@ -18,10 +23,6 @@ class QuizzesController < ApplicationController
     end
   end
 
-  def show
-    @quiz = Quiz.find(params[:id])
-  end
-
   def new
     @quiz = Quiz.new
   end
@@ -35,8 +36,7 @@ class QuizzesController < ApplicationController
         @quiz.user = current_user
         if can? (:create)
             @quiz.save
-            # flash[:primary] = "Thanks for your new quiz!"
-            # redirect_to quiz_path(@quiz.id)
+            flash[:primary] = "Hello, Quizzy!"
             redirect_to quizzes_path
         else
             flash[:danger] = "you are not authorized because you're a student"
@@ -57,16 +57,28 @@ class QuizzesController < ApplicationController
   def destroy
     @quiz = Quiz.find params[:id]
     @quiz.destroy
-    flash[:primary] = "We're sorry to see that you deleted your quiz."
+    flash[:primary] = "Goodbye, Quizzy!"
     redirect_to quizzes_path
   end
 
   private
+
+  def authorize_user!
+    unless can?(:crud, @quiz)
+      flash[:danger] = "Access Denied"
+      redirect_to quiz_path(@quiz)
+    end
+  end
+  
     def set_quiz
       @quiz = Quiz.find(params[:id])
     end
 
     def quiz_params
       params.require(:quiz).permit(:name, :description, :published)
-    end
-end
+            redirect_to quizzes_path
+        else
+            flash[:danger] = "you are not authorized because you're a student"
+            render root_path
+        end
+  end
