@@ -1,6 +1,6 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :authorize_user!, only: [:new, :edit, :update, :destroy]
   
 
   def index
@@ -76,7 +76,7 @@ class QuizzesController < ApplicationController
     def authorize_user!
       unless can?(:crud, @quizzes)
           flash[:danger] = "Access Denied"
-          redirect_to quiz_path(@quiz.id)
+          redirect_to quizzes_path
       end
     end
   end
