@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.all.order(created_at: :desc)
 
   end
 
@@ -29,15 +29,14 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    @question.quiz = Quiz.find params[:quiz_id]
+    
+    if @question.save question_params
+      flash[:success] = "Question created"
+      redirect_to quiz_questions_path(@question.quiz)
+    else
+      flash[:danger] = "There appear to be some errors."
+      render 'questions/new'
     end
   end
 
