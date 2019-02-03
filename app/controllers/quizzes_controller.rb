@@ -82,25 +82,3 @@ class QuizzesController < ApplicationController
             render root_path
         end
   end
-
-  private
-
-  def authorize_user!
-    unless can?(:crud, @quiz)
-      flash[:danger] = "Access Denied"
-      redirect_to quiz_path(@quiz)
-    end
-  end
-  
-    def set_quiz
-      @quiz = Quiz.find(params[:id])
-    end
-
-    def quiz_params
-      params.require(:quiz).permit(:name, :description, :published)
-            redirect_to quizzes_path
-        else
-            flash[:danger] = "you are not authorized because you're a student"
-            render root_path
-        end
-  end
