@@ -20,6 +20,8 @@
   <ol>
     <% @questions.each do |question|%>
     <li><%= question.body %></li>
+    <%= link_to 'Edit Question', edit_question_path(question) , class:"badge badge-warning"%>
+    <%= link_to 'Delete Question', edit_question_path(question), class: "badge badge-danger" %>
     <% end %>
   </ol>
   </div>
