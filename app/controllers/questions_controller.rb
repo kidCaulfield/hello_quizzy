@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /questions
   # GET /questions.json
@@ -42,14 +43,10 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
-    respond_to do |format|
-      if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
-      else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.update question_params
+      redirect_to question_path(@question.id)
+    else
+      render :edit
     end
   end
 
@@ -71,5 +68,12 @@ class QuestionsController < ApplicationController
 
     def find_question
       @question = Question.find params[:id]
+    end
+
+    def authorize_user!
+      unless can?(:crud, @quesiton)
+          flash[:danger] = "Access Denied"
+          redirect_to question_path(@question.id)
+      end
     end
 end
