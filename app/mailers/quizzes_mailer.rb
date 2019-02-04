@@ -1,5 +1,5 @@
 class QuizzesMailer < ApplicationMailer
-
+  
   def new_quiz(quiz)
     # we're definingn instance variables here so we can
     # access them in the view file

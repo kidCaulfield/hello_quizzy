@@ -18,13 +18,13 @@
            </li>
           <li class="nav-item dropdown">
           
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= current_user.username %>
-          </a>
          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
             <%= link_to "My Scores", my_quiz_scores_path, class:"dropdown-item" %>
             <%= link_to "My Quizzes", my_quizzes_path, class:"dropdown-item" %>
           </div>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= current_user.username %>
+          </a>
         </li>
           <% else %>
             <a class="navbar-nav ml-auto">
