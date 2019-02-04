@@ -5,7 +5,11 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   def show
     @answers = @question.answers.order(created_at: :desc)
+    # def current_check(answer) #method for radio buttons on answers
+    #   answer.correct ? true : false
+    # end
   end
+  # helper_method :current_check
 
   # GET /questions/new
   def new

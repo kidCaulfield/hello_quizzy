@@ -16,6 +16,7 @@ class AnswersController < ApplicationController
   # GET /answers/new
   def new
     @answer = Answer.new
+    @answer.question = Question.find params[:question_id]
   end
 
   # GET /answers/1/edit
@@ -26,46 +27,49 @@ class AnswersController < ApplicationController
   # POST /answers.json
   def create
     @answer = Answer.new(answer_params)
-
-    respond_to do |format|
-      if @answer.save
-        format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
-        format.json { render :show, status: :created, location: @answer }
-      else
-        format.html { render :new }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
+    @answer.question = Question.find params[:question_id]
+    if @answer.save
+      redirect_to question_path(@answer.question)
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /answers/1
   # PATCH/PUT /answers/1.json
   def update
-    respond_to do |format|
-      if @answer.update(answer_params)
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @answer }
-      else
-        format.html { render :edit }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
-    end
+      # if params[:correct_answer] #radio button selection update
+      #   @answer = Answer.find(params[:correct_answer].to_i)
+      #   @answer.question.answers.each do |answer|
+      #     if answer.id == params[:correct_answer].to_i
+      #       answer.correct = true
+      #     end
+      #       answer.correct = false
+      #   end
+      #   redirect_to question_path(@answer.question)
+      # else #regular update
+        if @answer.update(answer_params)
+          redirect_to question_path(@answer.question)
+        else
+          render :edit
+        end
+      # end
   end
 
   # DELETE /answers/1
   # DELETE /answers/1.json
   def destroy
     @answer.destroy
-    respond_to do |format|
-      format.html { redirect_to answers_url, notice: 'Answer was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to question_path(@answer.question)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
-      @answer = Answer.find(params[:id])
+      if params[:correct_answer]
+      else
+        @answer = Answer.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -74,9 +78,12 @@ class AnswersController < ApplicationController
     end
 
     def authorize_user!
-      unless can?(:crud, @answers)
-          flash[:danger] = "Access Denied"
-          redirect_to question_path(@answer.question.id)
+      if params[:correct_answer]
+      else
+        unless can?(:crud, @answer)
+            flash[:danger] = "Access Denied"
+            redirect_to question_path(@answer.question.id)
+        end
       end
     end
 end

@@ -16,10 +16,10 @@
   <div class="field">
     <h1>You are doing <%= @quiz.name %></h1>
   </div>
-
+  
   <% @questions.each do |question|%>
     <div class="field">
-     <b>Question<%=question.id%>:<%=question.body%></b><br>
+     <b>Question: <%=question.body%></b><br>
        <% question.answers.each do |answer|%>
           <p><span>
           <%= radio_button_tag(question.id, answer.id, false)%>
@@ -30,7 +30,7 @@
   <% end %>
 
   <div class="actions">
-    <%= form.submit%>
+    <%= form.submit "Submit Quiz"%>
   </div>
 </div>
 
