@@ -44,9 +44,9 @@
 </ol>
 
 <% end %>
-
+<% if @quiz.questions.length > 0 %>
 <%= link_to 'Take this quiz', new_quiz_score_path(@quiz), class: "btn btn-sm btn-primary" %>
-
+<% end %>
 <%= 
     link_to 'Back',
     'javascript:history.back()',

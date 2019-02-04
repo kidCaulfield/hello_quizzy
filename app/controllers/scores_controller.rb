@@ -2,34 +2,20 @@ class ScoresController < ApplicationController
   before_action :set_score, only: [:show, :edit, :update, :destroy]
 
   # GET /scores
-  # GET /scores.json
   def index
     @scores = Score.all.where("user_id = #{current_user}")
   end
-
-  # GET /scores/1
-  # GET /scores/1.json
-  # def show
-  # end
 
   # GET /scores/new
   def new
     @score = Score.new
     @quiz = Quiz.find params[:quiz_id]
     @questions = @quiz.questions
-    # @score.points = 0
-    
-    
-
-    # @score = Score.new 
-    # @quiz = @score.quiz params[:id]
-    # @score.quiz_id = 
   end
 
 
 
   # POST /scores
-  # POST /scores.json
   def create
     @score = Score.new
     @score.results = params
@@ -45,14 +31,7 @@ class ScoresController < ApplicationController
     total_correct = answers.select{|a| a.correct == true}.size
     @score.total = (total_correct.to_f / @quiz.questions.size.to_f)*100
 
-    
-
-
-
     if @score.save
-
-
-
     #this saves the student's answers
     # render json: params
     #then...redirect to score#show
@@ -61,12 +40,6 @@ class ScoresController < ApplicationController
       puts @score.errors.full_messages
       redirect_to root_path
     end
-
-    
-
-    
-    # @score = Score.create
-    # puts @score.quiz_id
   end
 
 

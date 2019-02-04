@@ -1,0 +1,11 @@
+<p>Hello <%= @owner.username %>,</p>
+
+<p>You create a new quiz</p>
+
+<p>Quiz title: <%= @quiz.name %></p>
+
+<%= link_to 'Click Here', "#{quizzes_url}##{dom_id(@quiz)}" %> to view the quiz.
+
+<p>Regards,</p>
+
+<p>Hello Quizzy Team</p> 
