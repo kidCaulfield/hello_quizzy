@@ -1,74 +1,88 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  
 
-  # GET /quizzes
-  # GET /quizzes.json
   def index
-    @quizzes = Quiz.all
+    @quizzes = Quiz.all.order(created_at: :desc)
   end
 
-  # GET /quizzes/1
-  # GET /quizzes/1.json
   def show
+    # Check within the view to determine who is the 
+    @questions = @quiz.questions
+    if user_signed_in?
+        #if you're teacher
+        if current_user.educator == true
+          # @quizzes = Quiz.all.where("user_id = 79")
+          @quizzes = Quiz.all.where(`user_id = #{current_user}`)
+        else
+          #if you're studnet
+          @quizzes = Quiz.all.where("published = true")
+        end
+    else 
+          # you're NOT signed in
+          flash[:danger] = "You are not signed in"
+          redirect_to new_session_path
+    end
   end
 
-  # GET /quizzes/new
   def new
-    @quiz = Quiz.new
+    if current_user.educator == true
+      @quiz = Quiz.new
+    else
+      flash[:danger] = "Access Denied"
+      redirect_to quizzes_path
+    end
   end
 
-  # GET /quizzes/1/edit
   def edit
   end
 
-  # POST /quizzes
-  # POST /quizzes.json
   def create
-    @quiz = Quiz.new(quiz_params)
-
-    respond_to do |format|
-      if @quiz.save
-        format.html { redirect_to @quiz, notice: 'Quiz was successfully created.' }
-        format.json { render :show, status: :created, location: @quiz }
-      else
-        format.html { render :new }
-        format.json { render json: @quiz.errors, status: :unprocessable_entity }
-      end
+    @quiz = Quiz.create quiz_params
+    @quiz.user = current_user
+      # if can? (:create)
+    if @quiz.save
+      flash[:primary] = "You've created a new quiz! Hello, Quizzy!"
+      redirect_to quiz_path(@quiz.id)
+      # redirect_to quizzes_path
+    else
+      flash[:danger] = "Something went wrong. Please review the page below."
+      render 'quizzes/new'
     end
   end
 
-  # PATCH/PUT /quizzes/1
-  # PATCH/PUT /quizzes/1.json
   def update
-    respond_to do |format|
-      if @quiz.update(quiz_params)
-        format.html { redirect_to @quiz, notice: 'Quiz was successfully updated.' }
-        format.json { render :show, status: :ok, location: @quiz }
-      else
-        format.html { render :edit }
-        format.json { render json: @quiz.errors, status: :unprocessable_entity }
-      end
-    end
+    @quiz = Quiz.find params[:id]
+        if @quiz.update quiz_params
+            flash[:primary] = "Thanks for updating your quiz!"
+            redirect_to quiz_path(@quiz)
+        else 
+            render :edit
+        end
   end
 
-  # DELETE /quizzes/1
-  # DELETE /quizzes/1.json
   def destroy
+    @quiz = Quiz.find params[:id]
     @quiz.destroy
-    respond_to do |format|
-      format.html { redirect_to quizzes_url, notice: 'Quiz was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:primary] = "Goodbye, Quizzy!"
+    redirect_to quizzes_path
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
+  private 
     def set_quiz
       @quiz = Quiz.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def quiz_params
-      params.require(:quiz).permit(:name, :user_id)
+      params.require(:quiz).permit(:name, :description, :published)
     end
-end
+
+    def authorize_user!
+      unless can?(:crud, @quiz)
+          flash[:danger] = "Access Denied"
+          redirect_to quizzes_path
+      end
+    end
+  end

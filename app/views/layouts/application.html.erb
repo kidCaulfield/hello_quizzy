@@ -10,24 +10,21 @@
   </head>
 
   <body>
-
-    <header>
+      <%= render 'layouts/navigation' %>
     
-      <nav>
-          <%= link_to("Home", root_path) %>
-          |
-          <%= link_to("Quizzes", quizzes_path) %>
-          |
-          <%= link_to("Scores", scores_path) %>
-          |<%= link_to "Logout", session_path, method: :delete, data: {confirm: "Are you sure you want to Log Out"} %>
-          |
-          |<%= link_to("Sign In", new_session_path) %>
-          |
-          |<%= link_to("Sign Up", new_user_path) %>
-         
-      </nav>
     </header>
-    <h1>Welcome to Hello Quizzy</h1>
-    <%= yield %>
+    <main class="container-fluid mt-3 p-3">
+
+      <%= image_tag 'hellokitty.jpg', :class => "img_homepage" %>
+      <% flash.each do |type, message|%>
+
+        <div class="alert alert-<%= type%>">
+          <%= message %>
+        </div>
+
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>

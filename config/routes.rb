@@ -2,12 +2,19 @@ Rails.application.routes.draw do
   
   root "welcome#index"
 
-  resources :quizzes 
-  resources :questions 
-  resources :answers 
-  resources :scores
+  resources :quizzes do
+    resources :scores
+    resources :questions, shallow: true do
+      resources :answers
+    end
+  end
+
+  # resources :users, only: [:new, :create] do
+  #   resources :scores
+  # end
+
   resources :users, only: [:new, :create]
-  resource :session, only: [:new, :create, :destroy]  
   
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resource :session, only: [:new, :create, :destroy]
+  
 end

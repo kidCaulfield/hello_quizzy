@@ -1,19 +1,15 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
-
-  # GET /questions
-  # GET /questions.json
-  def index
-    @questions = Question.all
-  end
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /questions/1
-  # GET /questions/1.json
   def show
+    @answers = @question.answers.order(created_at: :desc)
   end
 
   # GET /questions/new
   def new
+    @quiz = Quiz.find params[:quiz_id]
     @question = Question.new
   end
 
@@ -22,53 +18,49 @@ class QuestionsController < ApplicationController
   end
 
   # POST /questions
-  # POST /questions.json
   def create
     @question = Question.new(question_params)
-
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    @question.quiz = Quiz.find params[:quiz_id]
+    
+    if @question.save question_params
+      flash[:success] = "Question created"
+      redirect_to quiz_path(@question.quiz)
+    else
+      flash[:danger] = "There appear to be some errors."
+      render 'questions/new'
     end
   end
 
   # PATCH/PUT /questions/1
-  # PATCH/PUT /questions/1.json
   def update
-    respond_to do |format|
-      if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
-      else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.update question_params
+      redirect_to question_path(@question.id)
+    else
+      render :edit
     end
   end
 
   # DELETE /questions/1
-  # DELETE /questions/1.json
   def destroy
     @question.destroy
-    respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:danger] = "Question has been deleted"
+    redirect_to quiz_path(@question.quiz)
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question
-      @question = Question.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       params.require(:question).permit(:body, :quiz_id)
+    end
+
+    def find_question
+      @question = Question.find params[:id]
+    end
+
+    def authorize_user!
+      unless can?(:crud, @question)
+          flash[:danger] = "Access Denied"
+          redirect_to question_path(@question.id)
+      end
     end
 end

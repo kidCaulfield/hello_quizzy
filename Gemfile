@@ -7,6 +7,8 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
+gem 'will_paginate', '3.1.5'
+gem 'bootstrap-will_paginate', '1.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -46,6 +48,7 @@ gem 'active_model_serializers'
 gem 'rack-cors'
 gem 'webpacker'
 gem 'react-rails'
+gem 'rb-readline'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

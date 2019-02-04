@@ -1,27 +1,29 @@
-<%= form_with(model: quiz, local: true) do |form| %>
-  <% if quiz.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+<div class="container">
+  <%= form_with(model: quiz, local: true) do |form| %>
+    <% if quiz.errors.present? %>
+        <strong class="form-errors">
+        *** <%= quiz.errors.full_messages.join(", ") %> ***
+        </strong>
+    <% end %>
 
-      <ul>
-      <% quiz.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="field form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div>
+     <%= form.label :description %> <br>
+     <%= form.text_area :description, cols: 50, rows: 5 %>
+     </div>
+
+    <div>
+     <%= form.label :published %> <br>
+     <%= form.text_field :published, cols: 50, rows: 5 %>
+     </div >
+
+    <div class="actions">
+      <%= form.submit class: "btn btn-secondary" %>
+      <%= link_to 'Back', 'javascript:history.back()', class: "btn btn-danger", data:{confirm: "Changes will not be saved. Are you sure you want to go back?"} %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

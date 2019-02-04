@@ -1,14 +1,20 @@
-<p id="notice"><%= notice %></p>
+<%# open to changing this title%>
+<h4>This Question is Part of This Quiz: <%= @question.quiz.name %></h4>
 
-<p>
-  <strong>Body:</strong>
-  <%= @question.body %>
-</p>
+<h4>Question Title: <%= @question.body %> </h4>
+<%= link_to 'Edit Question Details', edit_question_path(@question.id), class: "btn-sm btn-info" %>
+<%= link_to 'Back', 'javascript:history.back()', class: "btn-sm btn-danger" %>
+<br>
+<div>
+  <% @answers.each do |answer| %>
+      <div>
+        <p>
+          <%= answer.body %>
+          <br>
+          <%= link_to 'Edit Answer', edit_answer_path(answer.id), class: "badge badge-warning"%>
+        </p>
+      </div>
+  <% end %>
+</div>
 
-<p>
-  <strong>Quiz:</strong>
-  <%= @question.quiz %>
-</p>
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
