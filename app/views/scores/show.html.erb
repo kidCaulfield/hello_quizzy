@@ -1,14 +1,29 @@
-<p id="notice"><%= notice %></p>
+<h1>Your resuls for Quiz <%=@score.quiz.name%></h1>
 
-<p>
-  <strong>Quiz:</strong>
-  <%= @score.quiz %>
-</p>
+<%@quiz.questions.each do |quiz_question|%>
+  <div>
+    <b>Question</b>
+    <p><%=quiz_question.body%></p>
+    
+    <% selected_answer = quiz_question.answers.select{ |a| a.id == @score.results[quiz_question.id.to_s].to_i}[0]%>
+    <%puts selected_answer.body%>
 
-<p>
-  <strong>User:</strong>
-  <%= @score.user %>
-</p>
+    <% if selected_answer.correct == true  %>
+        <b>You chose the correct answer: </b>
+        <p><%=selected_answer.body%></p>
+    <% else %>
+        <b>You chose: </b>
+        <p><%=selected_answer.body%></p>
+        <b>However, the correct answer is:</b>
+        <%quiz_question.answers.each do |answer|%>
+          <%if answer.correct == true %>
+            <%=answer.body%><br>
+          <% end %>
+        <% end %>
+    <% end %>
+  </div>
+<% end %>
+<h1>Your score is: <%=@score.total%>%</h1>
 
-<%= link_to 'Edit', edit_score_path(@score) %> |
-<%= link_to 'Back', scores_path %>
+
+

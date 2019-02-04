@@ -1,6 +1,6 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
-  # before_action :authorize_user!, only: [:new, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   
 
@@ -10,6 +10,7 @@ class QuizzesController < ApplicationController
 
   def show
     # Check within the view to determine who is the 
+    @questions = @quiz.questions
     if user_signed_in?
         #if you're teacher
         if current_user.educator == true
@@ -20,14 +21,19 @@ class QuizzesController < ApplicationController
           @quizzes = Quiz.all.where("published = true")
         end
     else 
-          # you're not signed IN
+          # you're NOT signed in
           flash[:danger] = "You are not signed in"
           redirect_to new_session_path
     end
   end
 
   def new
-    @quiz = Quiz.new
+    if current_user.educator == true
+      @quiz = Quiz.new
+    else
+      flash[:danger] = "Access Denied"
+      redirect_to quizzes_path
+    end
   end
 
   def edit
@@ -35,16 +41,16 @@ class QuizzesController < ApplicationController
 
   def create
     @quiz = Quiz.create quiz_params
-        @quiz.user = current_user
-        # if can? (:create)
-            if @quiz.save
-            flash[:primary] = "You've created a new quiz! Hello, Quizzy!"
-            redirect_to quiz_path(@quiz.id)
-            # redirect_to quizzes_path
-        else
-            flash[:danger] = "Something went wrong. Please review the page below."
-            render 'quizzes/new'
-        end
+    @quiz.user = current_user
+      # if can? (:create)
+    if @quiz.save
+      flash[:primary] = "You've created a new quiz! Hello, Quizzy!"
+      redirect_to quiz_path(@quiz.id)
+      # redirect_to quizzes_path
+    else
+      flash[:danger] = "Something went wrong. Please review the page below."
+      render 'quizzes/new'
+    end
   end
 
   def update
@@ -74,9 +80,9 @@ class QuizzesController < ApplicationController
     end
 
     def authorize_user!
-      unless can?(:crud, @quizzes)
+      unless can?(:crud, @quiz)
           flash[:danger] = "Access Denied"
-          # redirect_to quizzes_path
+          redirect_to quizzes_path
       end
     end
   end

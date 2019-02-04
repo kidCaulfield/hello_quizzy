@@ -16,6 +16,13 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+h1 {
+  font-family: "Indie Flower", cursive;
+  font-size: 6rem;
+  font-weight: bold;
+  margin: 15px 0 15px 0;
+  color: #ff3399;
+}
 .greetings {
   color: #ff00ff;
   font-weight: bolder;
@@ -153,4 +160,8 @@ i:hover {
 
 .pricing-column {
   text-align: center;
+}
+
+.new_quiz {
+  margin: 0 2.5rem 0 2.5rem;
 }

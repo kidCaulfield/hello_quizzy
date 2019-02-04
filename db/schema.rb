@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_02_223203) do
+ActiveRecord::Schema.define(version: 2019_02_03_220425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 2019_02_02_223203) do
   create_table "scores", force: :cascade do |t|
     t.bigint "quiz_id"
     t.bigint "user_id"
-    t.integer "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "total"
+    t.json "results"
     t.index ["quiz_id"], name: "index_scores_on_quiz_id"
     t.index ["user_id"], name: "index_scores_on_user_id"
   end
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2019_02_02_223203) do
     t.string "email"
     t.string "username"
     t.string "password_digest"
-    t.boolean "educator", default: false
+    t.boolean "educator", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
