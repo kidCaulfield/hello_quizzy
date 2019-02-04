@@ -4,6 +4,7 @@
 <h4>Question Title: <%= @question.body %> </h4>
 <%= link_to 'Edit Question Details', edit_question_path(@question.id), class: "btn-sm btn-info" %>
 <%= link_to 'Back', 'javascript:history.back()', class: "btn-sm btn-danger" %>
+<%= link_to 'Create Question', new_question_answer_path(@question.id), class: "btn-sm btn-danger" %>
 <br>
 <div>
   <% @answers.each do |answer| %>
