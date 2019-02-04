@@ -7,23 +7,11 @@ class ScoresController < ApplicationController
     @scores = Score.all.where("user_id = #{current_user}")
   end
 
-  # GET /scores/1
-  # GET /scores/1.json
-  # def show
-  # end
-
   # GET /scores/new
   def new
     @score = Score.new
     @quiz = Quiz.find params[:quiz_id]
     @questions = @quiz.questions
-    # @score.points = 0
-    
-    
-
-    # @score = Score.new 
-    # @quiz = @score.quiz params[:id]
-    # @score.quiz_id = 
   end
 
 
@@ -45,14 +33,7 @@ class ScoresController < ApplicationController
     total_correct = answers.select{|a| a.correct == true}.size
     @score.total = (total_correct.to_f / @quiz.questions.size.to_f)*100
 
-    
-
-
-
     if @score.save
-
-
-
     #this saves the student's answers
     # render json: params
     #then...redirect to score#show
