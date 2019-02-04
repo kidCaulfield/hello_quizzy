@@ -33,9 +33,9 @@ class UsersController < ApplicationController
     end
   end
 
-    def new
-        @user = User.new
-    end
+  def new
+      @user = User.new
+  end
 
   # PATCH/PUT /users/:id
   def update
@@ -50,6 +50,11 @@ class UsersController < ApplicationController
       
   end
 
+  def my_scores
+    # users make scores
+    @user = current_user
+    @score_history = @user.scores
+  end
 
 
   private

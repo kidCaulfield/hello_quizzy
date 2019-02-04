@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   
   root "welcome#index"
 
+  get("/my_quiz_history", to:"users#my_scores")
+
   resources :quizzes do
     resources :scores
     resources :questions, shallow: true do
