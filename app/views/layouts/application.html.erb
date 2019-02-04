@@ -11,17 +11,12 @@
 
   <body>
       <%= render 'layouts/navigation' %>
-    
-    </header>
+
     <main class="container-fluid mt-3 p-3">
-
-      <%= image_tag 'hellokitty.jpg', :class => "img_homepage" %>
       <% flash.each do |type, message|%>
-
         <div class="alert alert-<%= type%>">
           <%= message %>
         </div>
-
       <% end %>
 
       <%= yield %>
