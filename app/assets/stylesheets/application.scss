@@ -20,6 +20,10 @@
   color: #ff00ff;
   font-weight: bolder;
   margin: 10px 0 10px 10px;
+  text-align: center;
+  margin: 35px 0 25px 0;
+  font-size: 5rem;
+  font-family: "Indie Flower", cursive;
 }
 
 .new-profile {
@@ -33,6 +37,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+  margin-top: 2.5rem;
 }
 
 .new-question {
@@ -87,6 +92,9 @@ i:hover {
   height: 14rem;
   border-radius: 50% 50% 50% 50%;
 }
+.em {
+  font-family: "Indie Flower", cursive;
+}
 
 //  Press
 
@@ -101,8 +109,48 @@ i:hover {
 .press-logo {
   width: 6%;
   /* making the logos not so big, as you don't want the logos to be seen over the important text */
-  margin: 0 0 0 200px;
+  margin: 0 0 0 250px;
   /* Adding some margin all around to give some space */
   text-align: center;
   border-radius: 40% 40% 40% 40%;
+}
+
+/* Pricing Section */
+
+#pricing {
+  padding: 100px;
+  /* padding on all sides 100px  */
+}
+
+.price-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.pricing-column {
+  padding: 3% 2%;
+  /* This adds space inbetween the pricing colums! */
+}
+
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.section-heading {
+  text-align: center;
+  font-family: "Indie Flower", cursive;
+  font-size: 4rem;
+}
+
+.section-body {
+  text-align: center;
+}
+
+.white-section {
+  background-color: #fff;
+}
+
+.pricing-column {
+  text-align: center;
 }
