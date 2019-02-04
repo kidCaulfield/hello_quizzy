@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   
   root "welcome#index"
 
+  get("/my_quiz_scores", to:"users#my_scores")
+  get("/my_quizzes", to:"users#my_quizzes")
+
   resources :quizzes do
     resources :scores
     resources :questions, shallow: true do

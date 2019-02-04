@@ -1,0 +1,34 @@
+<h1>My Quizzes</h1>
+
+<div>
+    <h4>Published Quizzes:</h4>
+    <ol>
+    <%@quizzes_made.each do |quiz|%>
+        <%if quiz.published == true%>
+        <li>
+            Title: <%= link_to quiz.name, quiz_path(quiz)%> <br>
+            Description: <%= quiz.description%> <br>
+            <small>Quiz Created on: <%= quiz.created_at.strftime("%B %d, %Y")%></small>
+        </li>
+        <% end %>
+    <% end %>
+    </ol>
+</div>
+
+<br>
+<hr>
+
+<div>
+    <h4>Unpublished Quizzes:</h4>
+    <ol>
+    <%@quizzes_made.each do |quiz|%>
+        <%if quiz.published == false%>
+        <li>
+            Title: <%= link_to quiz.name, quiz_path(quiz)%> <br>
+            Description: <%= quiz.description%> <br>
+            <small>Quiz Created on: <%= quiz.created_at.strftime("%B %d, %Y")%></small>
+        </li>
+        <% end %>
+    <% end %>
+    </ol>
+</div>
