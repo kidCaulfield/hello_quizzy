@@ -1,0 +1,9 @@
+<h1>My Quiz History</h1>
+<%@score_history.each do |score|%>
+    <p><strong> Quiz Name: </strong></p> 
+    <p><%= score.quiz.name %></p>
+    <p>Mark for quiz:</p>
+    <p><%= score.total %>%</p>
+    <p>You took this quiz on: <%= score.created_at.strftime("%B %d, %Y") %></p>
+    </p>
+<% end %>

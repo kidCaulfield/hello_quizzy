@@ -1,10 +1,12 @@
-<div class="container">
+<h1 align="center">New Quiz</h1>
+<div class="container new_quiz">
   <%= form_with(model: @quiz, local: true) do |form| %>
     <% if @quiz.errors.present? %>
         <p class="form-errors">
         <%= @quiz.errors.full_messages.join(", ") %>
         </p>
     <% end %>
-    <% end %>
+    </div>
+ <% end %>
 
 <%= render 'form', quiz: @quiz %>

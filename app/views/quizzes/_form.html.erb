@@ -1,11 +1,13 @@
-<div class="container">
+<div class="card border-0 new_quiz">
+  <div class="card-header">
   <%= form_with(model: quiz, local: true) do |form| %>
     <% if quiz.errors.present? %>
         <strong class="form-errors">
         *** <%= quiz.errors.full_messages.join(", ") %> ***
         </strong>
+        </div>
     <% end %>
-
+    <div class="card-body">
     <div class="field form-group">
       <%= form.label :name %>
       <%= form.text_field :name, class: "form-control" %>
@@ -17,9 +19,10 @@
      </div>
 
     <div>
-     <%= form.label :published %> <br>
-     <%= form.text_field :published, cols: 50, rows: 5 %>
+    <%= check_box_tag :published %>
+     <%= form.label :published %>
      </div >
+    
 
     <div class="actions">
       <%= form.submit class: "btn btn-secondary" %>
