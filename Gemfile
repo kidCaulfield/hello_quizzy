@@ -51,6 +51,7 @@ gem 'react-rails'
 gem 'rb-readline'
 gem 'delayed_job_active_record'
 gem 'letter_opener'
+gem 'delayed_job_web'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
