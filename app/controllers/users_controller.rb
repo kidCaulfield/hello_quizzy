@@ -56,6 +56,11 @@ class UsersController < ApplicationController
     @score_history = @user.scores
   end
 
+  def my_quizzes
+    @user = current_user
+    @quizzes_made = @user.quizzes
+  end
+
 
   private
 
