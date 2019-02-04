@@ -9,21 +9,21 @@ class QuizzesController < ApplicationController
   end
 
   def show
-    # Check within the view to determine who is the 
+     
     @questions = @quiz.questions
     if user_signed_in?
-        #if you're teacher
-        if current_user.educator == true
-          # @quizzes = Quiz.all.where("user_id = 79")
-          @quizzes = Quiz.all.where(`user_id = #{current_user}`)
-        else
-          #if you're studnet
-          @quizzes = Quiz.all.where("published = true")
-        end
+        
+      if current_user.educator == true
+  
+        @quizzes = Quiz.all.where(`user_id = #{current_user}`)
+      else
+        
+        @quizzes = Quiz.all.where("published = true")
+      end
     else 
-          # you're NOT signed in
-          flash[:danger] = "You are not signed in"
-          redirect_to new_session_path
+          
+      flash[:danger] = "You are not signed in"
+      redirect_to new_session_path
     end
   end
 
@@ -40,13 +40,14 @@ class QuizzesController < ApplicationController
   end
 
   def create
-    @quiz = Quiz.create quiz_params
+    @quiz = Quiz.new quiz_params
     @quiz.user = current_user
-      # if can? (:create)
+      
     if @quiz.save
+      # QuizzesMailer.new_quiz(@quiz).deliver_now
       flash[:primary] = "You've created a new quiz! Hello, Quizzy!"
       redirect_to quiz_path(@quiz.id)
-      # redirect_to quizzes_path
+      
     else
       flash[:danger] = "Something went wrong. Please review the page below."
       render 'quizzes/new'

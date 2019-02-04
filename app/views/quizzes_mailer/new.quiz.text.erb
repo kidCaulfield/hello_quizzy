@@ -1,0 +1,11 @@
+Hello <%= @owner.username %>,
+
+You create a new quiz
+
+Quiz title: <%= @quiz.name %>
+
+<%= link_to 'Click Here', "#{quizzes_url}##{dom_id(@quiz)}" %> to view the quiz.
+
+Regards,
+
+Hello Quizzy Team 
