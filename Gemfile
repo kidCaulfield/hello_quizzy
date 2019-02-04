@@ -50,7 +50,6 @@ gem 'webpacker'
 gem 'react-rails'
 gem 'rb-readline'
 gem 'delayed_job_active_record'
-gem 'letter_opener'
 gem 'delayed_job_web'
 
 group :development, :test do
@@ -62,6 +61,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
+  gem 'letter_opener'
 end
 
 group :development do

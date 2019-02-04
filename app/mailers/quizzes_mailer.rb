@@ -4,10 +4,10 @@ class QuizzesMailer < ApplicationMailer
     # we're definingn instance variables here so we can
     # access them in the view file
     @quiz = quiz
-    @owner    = @quiz.user
+    @owner = @quiz.user
 
     mail(
-      to: @owner.email,
+      to: 'hello.quizzy.mail@gmail.com',
       subject: 'You created and new quiz'
     )
   end

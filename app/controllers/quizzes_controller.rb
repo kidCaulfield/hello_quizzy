@@ -40,11 +40,11 @@ class QuizzesController < ApplicationController
   end
 
   def create
-    @quiz = Quiz.create quiz_params
+    @quiz = Quiz.new quiz_params
     @quiz.user = current_user
       
     if @quiz.save
-      QuizzesMailer.new_quiz(@quiz).deliver_now
+      # QuizzesMailer.new_quiz(@quiz).deliver_now
       flash[:primary] = "You've created a new quiz! Hello, Quizzy!"
       redirect_to quiz_path(@quiz.id)
       
