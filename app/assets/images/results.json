@@ -1,0 +1,13 @@
+{
+  // "quiz": "quiz_id",
+  "q1": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q2": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q3": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q4": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q5": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q6": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q7": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q8": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q9": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"},
+  "q10": {"correct": "answer_id, where correct: true", "youranswer": "answer_id"}
+}
