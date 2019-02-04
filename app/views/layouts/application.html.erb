@@ -12,17 +12,15 @@
 
   <body>
       <%= render 'layouts/navigation' %>
-    
-    </header>
-    <h1 class="greetings">Welcome to Hello Quizzy</h1>
-    <%= image_tag 'hellokitty.jpg', :class => "img_homepage" %>
-    <main class="">
-        <% flash.each do |type, message|%>
-          <div class="alert alert-<%= type%>">
-            <%= message %>
-          </div>
-        <% end %>
-        <%= yield %>
-         </main>
+
+    <main class="container-fluid mt-3 p-3">
+      <% flash.each do |type, message|%>
+        <div class="alert alert-<%= type%>">
+          <%= message %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>
