@@ -53,12 +53,12 @@ class UsersController < ApplicationController
   def my_scores
     # users make scores
     @user = current_user
-    @score_history = @user.scores
+    @score_history = @user.scores.order(created_at: :desc)
   end
 
   def my_quizzes
     @user = current_user
-    @quizzes_made = @user.quizzes
+    @quizzes_made = @user.quizzes.order(created_at: :desc)
   end
 
 

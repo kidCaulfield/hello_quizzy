@@ -6,9 +6,9 @@
     <%@quizzes_made.each do |quiz|%>
         <%if quiz.published == true%>
         <li>
-            <%= link_to quiz.name, quiz_path(quiz)%>
-            <br>
-            <%= quiz.description%>
+            Title: <%= link_to quiz.name, quiz_path(quiz)%> <br>
+            Description: <%= quiz.description%> <br>
+            <small>Quiz Created on: <%= quiz.created_at.strftime("%B %d, %Y")%></small>
         </li>
         <% end %>
     <% end %>
@@ -24,9 +24,9 @@
     <%@quizzes_made.each do |quiz|%>
         <%if quiz.published == false%>
         <li>
-            <%= link_to quiz.name, quiz_path(quiz)%>
-            <br>
-            <%= quiz.description%>
+            Title: <%= link_to quiz.name, quiz_path(quiz)%> <br>
+            Description: <%= quiz.description%> <br>
+            <small>Quiz Created on: <%= quiz.created_at.strftime("%B %d, %Y")%></small>
         </li>
         <% end %>
     <% end %>
