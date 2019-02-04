@@ -2,7 +2,6 @@ class ScoresController < ApplicationController
   before_action :set_score, only: [:show, :edit, :update, :destroy]
 
   # GET /scores
-  # GET /scores.json
   def index
     @scores = Score.all.where("user_id = #{current_user}")
   end
@@ -17,7 +16,6 @@ class ScoresController < ApplicationController
 
 
   # POST /scores
-  # POST /scores.json
   def create
     @score = Score.new
     @score.results = params
@@ -42,12 +40,6 @@ class ScoresController < ApplicationController
       puts @score.errors.full_messages
       redirect_to root_path
     end
-
-    
-
-    
-    # @score = Score.create
-    # puts @score.quiz_id
   end
 
 

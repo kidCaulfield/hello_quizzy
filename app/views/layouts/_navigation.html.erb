@@ -22,8 +22,8 @@
           <%= current_user.username %>
           </a>
          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-            <%= link_to "My Scores", my_quiz_history_path(), class:"dropdown-item" %>
-            <a class="dropdown-item" href="#"><%#= link_to "View your profile", user_path %> </a>
+            <%= link_to "My Scores", my_quiz_scores_path, class:"dropdown-item" %>
+            <%= link_to "My Quizzes", my_quizzes_path, class:"dropdown-item" %>
           </div>
         </li>
           <% else %>
